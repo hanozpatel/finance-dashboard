@@ -2,14 +2,15 @@
 
 import axios from 'axios'
 
-import { STATIC_DEMO, demoAdapter } from './demo'
+import { BROWSER_APP, browserAdapter } from './runtime'
 
 export const http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '',
   timeout: 120_000, // a first Plaid sync pulls years of history
-  // The GitHub Pages preview has no server: every request is answered from a
-  // snapshot of the demo data instead. Nothing else in the app knows.
-  ...(STATIC_DEMO ? { adapter: demoAdapter } : {}),
+  // The web build has no server: the Python backend runs inside the browser
+  // tab and every request is a function call into it. Nothing else in the app
+  // needs to know which one it is talking to.
+  ...(BROWSER_APP ? { adapter: browserAdapter } : {}),
 })
 
 /** Turn any axios failure into the message the API actually sent. */

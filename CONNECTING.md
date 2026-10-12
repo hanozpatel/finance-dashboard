@@ -1,5 +1,12 @@
 # Connecting your real accounts
 
+> **These steps are for the version installed on your computer.** The
+> [web app](https://hanozpatel.github.io/finance-dashboard/) runs entirely in your
+> browser and has no server to hold the secret keys banks require, so there you
+> import your bank's CSV export instead (Accounts tab → Import a CSV) — see
+> [section 4](#4-apple-card-and-apple-savings--csv-and-by-hand) for how CSV import
+> works.
+
 The app runs on made-up demo data until you connect something. Most people's
 accounts fall into three groups, and each has one route:
 

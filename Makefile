@@ -1,4 +1,4 @@
-.PHONY: install env dev backend frontend test seed build preview clean
+.PHONY: install env dev backend frontend test seed build web clean
 
 install:
 	cd backend && python3 -m venv venv && . venv/bin/activate && pip install -q -r requirements.txt
@@ -52,8 +52,8 @@ build:
 clean:
 	rm -f backend/finance.db backend/finance.db-shm backend/finance.db-wal
 
-# The read-only static preview that GitHub Pages serves, built locally into
-# frontend/dist-preview. Serve that folder to look at it.
-preview:
-	cd backend && . venv/bin/activate && python scripts/build_static_demo.py
-	cd frontend && VITE_STATIC_DEMO=1 npx vite build --outDir dist-preview
+# The web build GitHub Pages serves: the whole app, Python backend included,
+# running in the browser. Output in frontend/dist-web; serve that folder to try it.
+web:
+	python3 backend/scripts/build_browser_bundle.py
+	cd frontend && VITE_BROWSER_APP=1 npx vite build --outDir dist-web

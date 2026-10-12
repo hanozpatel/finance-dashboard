@@ -17,7 +17,7 @@ import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import { Badge, Button, money, Segmented } from './components/ui'
 import { useAsync } from './hooks/useAsync'
 import { api, errorMessage } from './lib/api'
-import { CODESPACES_URL, REPO_URL, STATIC_DEMO } from './lib/demo'
+import { BROWSER_APP, INSTALL_URL, REPO_URL } from './lib/runtime'
 import { useTheme } from './lib/theme'
 import Accounts from './pages/Accounts'
 import Budget from './pages/Budget'
@@ -70,7 +70,7 @@ export default function App() {
 
   return (
     <div className="min-h-full">
-      {STATIC_DEMO && <PreviewBar />}
+      {BROWSER_APP && <BrowserBar />}
       <header
         className="sticky top-0 z-20 border-b backdrop-blur"
         // Not Tailwind's bg-[var(--surface-1)]/95: an opacity modifier cannot
@@ -99,10 +99,13 @@ export default function App() {
               <span className="max-w-sm truncate text-xs text-[var(--text-muted)]">{syncNote}</span>
             )}
             {health.data?.is_demo && <Badge tone="info">Demo data</Badge>}
-            <Button onClick={sync} size="sm" disabled={syncing}>
-              <RefreshCw size={13} className={syncing ? 'animate-spin' : undefined} />
-              {syncing ? 'Syncing' : 'Sync'}
-            </Button>
+            {/* In the browser there is no bank connection to sync. */}
+            {!BROWSER_APP && (
+              <Button onClick={sync} size="sm" disabled={syncing}>
+                <RefreshCw size={13} className={syncing ? 'animate-spin' : undefined} />
+                {syncing ? 'Syncing' : 'Sync'}
+              </Button>
+            )}
             <Segmented
               size="sm"
               value={choice}
@@ -196,7 +199,9 @@ export default function App() {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <span className="inline-flex items-center gap-1">
             {choice === 'system' ? <Monitor size={11} /> : choice === 'dark' ? <Moon size={11} /> : <Sun size={11} />}
-            Local-only: data stays in {health.data?.database ?? 'finance.db'} on this machine.
+            {BROWSER_APP
+              ? 'Stored only in this browser, on this device. Nothing is sent anywhere.'
+              : `Local-only: data stays in ${health.data?.database ?? 'finance.db'} on this machine.`}
           </span>
           {health.data && (
             <span className="tnum">
@@ -204,7 +209,7 @@ export default function App() {
               {health.data.latest_transaction ? ` · latest ${health.data.latest_transaction}` : ''}
             </span>
           )}
-          {health.data && !health.data.master_key_from_environment && (
+          {!BROWSER_APP && health.data && !health.data.master_key_from_environment && (
             <Badge tone="warning">FINANCE_MASTER_KEY not set</Badge>
           )}
         </div>
@@ -214,25 +219,39 @@ export default function App() {
 }
 
 /**
- * Only on the GitHub Pages preview: says what this is before anyone mistakes
- * the numbers for something real, and points at the version that saves.
+ * Only in the web build: says plainly where the data lives — the single most
+ * important fact about a finance app — and where to go for automatic bank sync,
+ * which a browser cannot do. Dismissible, because it is information, not a
+ * warning, and repeating it on every visit would be noise.
  */
-function PreviewBar() {
+function BrowserBar() {
+  const [hidden, setHidden] = useState(() => {
+    try { return localStorage.getItem('finance-browser-bar') === 'hidden' } catch { return false }
+  })
+  if (hidden) return null
   return (
     <div
       className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-xs"
       style={{ background: 'var(--accent-wash)', color: 'var(--text-secondary)' }}
     >
       <span>
-        <strong className="text-[var(--text-primary)]">Live preview</strong> — made-up data, read-only.
+        <strong className="text-[var(--text-primary)]">Runs entirely in your browser.</strong>{' '}
+        Your data stays on this device — import your bank's CSV exports to use your own.
       </span>
-      <a href={CODESPACES_URL} target="_blank" rel="noreferrer"
-         className="font-medium text-[var(--text-primary)] underline">
-        Run the full app in Codespaces
+      <a href={INSTALL_URL} target="_blank" rel="noreferrer" className="font-medium text-[var(--text-primary)] underline">
+        Install it for automatic bank sync
       </a>
-      <a href={REPO_URL} target="_blank" rel="noreferrer" className="underline">
-        Source on GitHub
-      </a>
+      <a href={REPO_URL} target="_blank" rel="noreferrer" className="underline">Source</a>
+      <button
+        onClick={() => {
+          setHidden(true)
+          try { localStorage.setItem('finance-browser-bar', 'hidden') } catch { /* fine */ }
+        }}
+        className="underline"
+        aria-label="Hide this message"
+      >
+        Hide
+      </button>
     </div>
   )
 }

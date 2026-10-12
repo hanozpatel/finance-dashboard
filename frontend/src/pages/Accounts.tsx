@@ -29,6 +29,7 @@ import {
 import { useAsync } from '../hooks/useAsync'
 import { api, errorMessage, type Account, type Connection, type PlaidLinkKind } from '../lib/api'
 import { mediumDate, relativeDays, todayISO } from '../lib/format'
+import { BROWSER_APP, INSTALL_URL, deleteAllData, downloadBackup, restoreBackup } from '../lib/runtime'
 
 declare global {
   interface Window {
@@ -183,7 +184,7 @@ export default function Accounts({
         </div>
       )}
 
-      {providers.encryption.warning && (
+      {!BROWSER_APP && providers.encryption.warning && (
         <div className="mb-4">
           <Banner tone="warning" title="Set an encryption key">
             {providers.encryption.warning}
@@ -191,10 +192,41 @@ export default function Accounts({
         </div>
       )}
 
-      <SectionTitle hint="Plaid reaches most US banks and cards, SnapTrade reaches brokerages, and anything else imports from CSV or is kept by hand.">
+      <SectionTitle hint={BROWSER_APP
+        ? 'Import the CSV export from each bank, or add accounts by hand. Everything stays in this browser.'
+        : 'Plaid reaches most US banks and cards, SnapTrade reaches brokerages, and anything else imports from CSV or is kept by hand.'}>
         Connect an institution
       </SectionTitle>
       <div className="grid gap-4 lg:grid-cols-3">
+        {BROWSER_APP ? (
+          <Card className="flex flex-col lg:col-span-2">
+            <CardHeader
+              title="Automatic bank sync"
+              subtitle="Available when you install the app on your computer"
+            />
+            <p className="flex-1 text-xs leading-relaxed text-[var(--text-secondary)]">
+              Banks and brokerages only hand transactions to a server holding secret API keys —
+              Plaid refuses requests made from a browser at all — and this version has no server:
+              it runs entirely on your device. So here, your real data comes in as the CSV export
+              every bank offers (import it on the right), or as accounts you add by hand below.
+              Installing the app on your own computer adds automatic sync through Plaid and
+              SnapTrade, with free keys you get yourself.
+            </p>
+            <div className="mt-3">
+              <a
+                href={INSTALL_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium text-[var(--text-primary)]"
+                style={{ borderColor: 'var(--border-strong)' }}
+              >
+                <Link2 size={14} />
+                How to install it
+              </a>
+            </div>
+          </Card>
+        ) : (
+          <>
         <ProviderCard
           name="Plaid · banks and cards"
           purpose="Checking · savings · credit cards"
@@ -259,6 +291,9 @@ export default function Accounts({
           }
         />
 
+          </>
+        )}
+
         <ProviderCard
           name="CSV import"
           purpose="Apple Savings · Apple Card · anything else"
@@ -276,6 +311,8 @@ export default function Accounts({
           action={null}
         />
       </div>
+
+      {BROWSER_APP && <YourData />}
 
       {live.length > 0 && (
         <>
@@ -1147,6 +1184,69 @@ function RulesPanel() {
         any kind. The APY set on each account feeds the idle-cash finding on the Find Savings tab and
         the down-payment projection on the house tab.
       </p>
+    </>
+  )
+}
+
+/**
+ * Web build only. In a browser, the data is as durable as the browser's
+ * storage — clearing site data, or a different device, and it is gone — so a
+ * copy you can keep, and a clean way to start over, are not optional extras.
+ */
+function YourData() {
+  const [error, setError] = useState<string | null>(null)
+  const [busy, setBusy] = useState(false)
+
+  return (
+    <>
+      <SectionTitle hint="Nothing here is ever uploaded. Back it up if it matters to you — clearing this site's data in your browser deletes it.">
+        Your data on this device
+      </SectionTitle>
+      <Card>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button onClick={() => downloadBackup().catch((e) => setError(errorMessage(e)))}>
+            <FileUp size={14} />
+            Download a backup
+          </Button>
+          <label className="inline-flex">
+            <input
+              type="file"
+              accept=".db,.sqlite,application/vnd.sqlite3,application/octet-stream"
+              className="sr-only"
+              onChange={async (e) => {
+                const file = e.target.files?.[0]
+                e.target.value = ''
+                if (!file) return
+                if (!window.confirm('Replace everything in this browser with this backup?')) return
+                setBusy(true)
+                try { await restoreBackup(file) } catch (err) { setError(errorMessage(err)); setBusy(false) }
+              }}
+            />
+            <span
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium text-[var(--text-primary)]"
+              style={{ borderColor: 'var(--border-strong)' }}
+            >
+              <Upload size={14} />
+              {busy ? 'Restoring…' : 'Restore a backup'}
+            </span>
+          </label>
+          <div className="ml-auto">
+            <Button
+              variant="danger"
+              onClick={async () => {
+                if (!window.confirm(
+                  'Delete every account, transaction, budget and rule from this browser?\n\nThis cannot be undone unless you have a backup.',
+                )) return
+                try { await deleteAllData() } catch (err) { setError(errorMessage(err)) }
+              }}
+            >
+              <Trash2 size={14} />
+              Delete all my data
+            </Button>
+          </div>
+        </div>
+        {error && <p className="mt-2 text-xs" style={{ color: 'var(--danger-text)' }}>{error}</p>}
+      </Card>
     </>
   )
 }

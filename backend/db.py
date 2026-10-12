@@ -26,6 +26,9 @@ import threading
 from contextlib import contextmanager
 
 DB_PATH = os.getenv("FINANCE_DB_PATH", os.path.join(os.path.dirname(__file__), "finance.db"))
+JOURNAL_MODE = os.getenv("FINANCE_JOURNAL_MODE", "WAL").upper()
+if JOURNAL_MODE not in ("WAL", "DELETE", "MEMORY", "TRUNCATE"):
+    JOURNAL_MODE = "WAL"
 
 _local = threading.local()
 # Every connection handed out, so the store can be repointed at a different
@@ -225,7 +228,9 @@ def connect() -> sqlite3.Connection:
     if conn is None:
         conn = sqlite3.connect(DB_PATH, timeout=30.0)
         conn.row_factory = sqlite3.Row
-        conn.execute("PRAGMA journal_mode=WAL")
+        # WAL needs shared memory the in-browser build does not have; there the
+        # journal is kept in memory and the file is persisted after each write.
+        conn.execute(f"PRAGMA journal_mode={JOURNAL_MODE}")
         conn.execute("PRAGMA foreign_keys=ON")
         conn.execute("PRAGMA busy_timeout=5000")
         _local.conn = conn

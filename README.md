@@ -7,8 +7,7 @@ ranks concrete ways to spend less, and plans a home purchase against the result.
 
 No cloud, no account, no telemetry. One SQLite file, next to the code.
 
-[![Live preview](https://img.shields.io/badge/live_preview-open-2a78d6)](https://hanozpatel.github.io/finance-dashboard/)
-[![Open in GitHub Codespaces](https://img.shields.io/badge/Codespaces-run_the_full_app-1baf7a?logo=github)](https://codespaces.new/hanozpatel/finance-dashboard?quickstart=1)
+[![Open the app](https://img.shields.io/badge/open_the_app-in_your_browser-2a78d6)](https://hanozpatel.github.io/finance-dashboard/)
 [![Tests](https://github.com/hanozpatel/finance-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/hanozpatel/finance-dashboard/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
@@ -16,14 +15,28 @@ No cloud, no account, no telemetry. One SQLite file, next to the code.
 
 ## Try it
 
-Every screenshot and the preview use **made-up data** — a fictional person in San
-Francisco. Nothing here is anyone's real finances.
+**[Open the app →](https://hanozpatel.github.io/finance-dashboard/)** — it runs entirely in your browser. No account, no
+sign-up, no install, and nothing you enter is sent anywhere: the whole app,
+Python backend included, runs on your device and stores its data there.
 
-| | | |
+It opens with 18 months of **made-up demo data** (a fictional person in San
+Francisco) so every tab has something to show. Clear it with one click, then
+bring in your own by importing the CSV export every bank offers, or by adding
+accounts by hand. Back up, restore, or delete your data from the Accounts tab.
+
+| | Web app | Installed on your computer |
 |---|---|---|
-| **Look around** | [Live preview](https://hanozpatel.github.io/finance-dashboard/) | Instant, read-only, nothing to install |
-| **Use it in your browser** | [Open in Codespaces](https://codespaces.new/hanozpatel/finance-dashboard?quickstart=1) | Your own private copy of the full app, ready in about two minutes |
-| **Run it locally** | see below | Python 3.11+ and Node 20+ |
+| Account or sign-up | None | None |
+| Install | None | Python 3.11+ and Node 20+ |
+| Your data lives | In this browser, on this device | In one SQLite file, on this machine |
+| Getting your transactions in | CSV export from your bank, or by hand | **Automatic bank sync** (Plaid, SnapTrade), CSV, or by hand |
+| Everything else | Identical | Identical |
+
+## Install it for automatic bank sync
+
+Banks and brokerages only hand transactions to a server holding secret API keys
+— Plaid refuses requests made from a browser at all — so automatic sync needs
+the app running on your own computer:
 
 ```bash
 git clone https://github.com/hanozpatel/finance-dashboard.git
@@ -33,9 +46,8 @@ make env          # backend/.env with a freshly generated encryption key
 make dev          # API on :8001, app on http://localhost:5174
 ```
 
-The app starts with 18 months of realistic demo data so every tab works before
-you link anything. One click clears it; [CONNECTING.md](CONNECTING.md) walks
-through linking real accounts.
+Then follow [CONNECTING.md](CONNECTING.md) to link your accounts. Both providers
+have free tiers for one household, with no business registration.
 
 ---
 
@@ -344,35 +356,37 @@ insight nobody acts on is trivia; tying it to a date makes it a decision.
 ---
 
 
-## How it is hosted
+## How the web app works
 
-There is no shared server, on purpose: a finance app that stores everyone's data
-in one place is a different and much riskier product.
+There is no server — not for the app and not for your data. GitHub Pages serves
+static files, and everything else happens in your browser:
 
-- **The live preview** is a static build on GitHub Pages. A
-  [workflow](.github/workflows/pages.yml) seeds a throwaway database with the
-  made-up demo data, records every response the interface can ask for
-  ([`build_static_demo.py`](backend/scripts/build_static_demo.py)), and the browser
-  answers from that file. Searching and filtering transactions runs in the browser
-  against the full demo ledger. It rebuilds daily so its "this month" matches
-  yours. Edits are refused with a pointer to the full app.
-- **Codespaces** runs the real app in a private container for whoever opens it,
-  configured by [`.devcontainer/`](.devcontainer/devcontainer.json): dependencies
-  install, an encryption key is generated, demo data loads, and the app opens.
-  Nothing is shared between visitors.
-- **Locally** it is two processes on localhost.
+- **The backend runs in the browser.** The same Python code the installed app
+  runs on a server is loaded into [Pyodide](https://pyodide.org) — CPython compiled
+  to WebAssembly — and every API request becomes a function call into it
+  ([`browser_bridge.py`](backend/browser_bridge.py),
+  [`runtime.ts`](frontend/src/lib/runtime.ts)). One codebase, one test suite.
+- **The database is a SQLite file in your browser's storage** (IndexedDB). It is
+  never uploaded. That also means it is only as durable as your browser's
+  storage — clearing site data deletes it — so the Accounts tab offers a backup
+  you can download and restore.
+- **The first visit downloads about 12 MB** (the Python runtime and its
+  libraries), cached afterwards; a return visit starts in about two seconds.
+- **Automatic bank sync is the one thing it cannot do**, for the reason above.
+
+The installed version is the same app talking to a FastAPI server on localhost.
 
 ---
 
 ## Development
 
 ```bash
-make test          # 218 backend tests
+make test          # 224 backend tests
 make dev           # API + app together
 make backend       # API only
 make frontend      # app only
 make build         # production bundle (type-checks first)
-make preview       # build the static GitHub Pages preview into frontend/dist-preview
+make web           # build the in-browser web app into frontend/dist-web
 ```
 
 To run a second checkout alongside the first, put different ports in an
@@ -386,10 +400,11 @@ FRONTEND_PORT = 5175
 ```
 backend/
   db.py                     schema, connections, the sign conventions
+  browser_bridge.py         runs the API inside a browser (web app)
   data/state_benchmarks.json  BEA spending per person, by state and category
   scripts/
     build_state_benchmarks.py rebuild the benchmarks from BEA's release
-    build_static_demo.py      snapshot the demo for the static preview
+    build_browser_bundle.py   package the backend for the in-browser web app
   services/
     benchmarks.py           state averages, household scaling, your settings
     budgeting.py            the Budget tab: budget vs spend vs state
@@ -408,12 +423,12 @@ backend/
     crypto_service.py       AES-256-GCM for tokens
     seed.py                 deterministic demo data
   routers/                  FastAPI endpoints
-  tests/                    218 tests
+  tests/                    224 tests
 
 frontend/src/
   components/charts.tsx     every chart, with the mark specs applied once
   components/ui.tsx         cards, stat tiles, meters, tables, badges
-  lib/demo.ts               the static preview's in-browser "backend"
+  lib/runtime.ts            boots the in-browser backend; backup and restore
   pages/                    one file per tab
 ```
 

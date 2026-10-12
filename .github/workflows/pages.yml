@@ -1,19 +1,15 @@
-# Builds the read-only live preview and publishes it to GitHub Pages.
+# Builds the web version of the app and publishes it to GitHub Pages.
 #
-# The preview has no server: backend/scripts/build_static_demo.py seeds a
-# throwaway database with made-up data and records every response the UI can
-# ask for, and the static build answers from that file.
-#
-# It runs daily as well as on push because the demo data is generated relative
-# to today. Rebuilding keeps the preview's "this month" lined up with the
-# visitor's calendar instead of drifting further behind every day.
-name: Live preview
+# The web version is the whole app, Python backend included, running inside the
+# visitor's browser with Pyodide (see backend/browser_bridge.py). Pages only
+# serves files: the frontend, plus the backend's source zipped by
+# backend/scripts/build_browser_bundle.py. There is no server, and each
+# visitor's data stays in their own browser.
+name: Web app
 
 on:
   push:
     branches: [main]
-  schedule:
-    - cron: "17 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -31,14 +27,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: pip
-          cache-dependency-path: backend/requirements.txt
-      - run: pip install -r backend/requirements.txt
-      - name: Snapshot the demo data
-        run: python backend/scripts/build_static_demo.py
+      - name: Package the backend for the browser
+        run: python3 backend/scripts/build_browser_bundle.py
 
       - uses: actions/setup-node@v4
         with:
@@ -47,11 +37,11 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
         working-directory: frontend
-      - name: Build the static preview
-        run: npx vite build
+      - name: Build the web app
+        run: npx tsc --noEmit && npx vite build
         working-directory: frontend
         env:
-          VITE_STATIC_DEMO: "1"
+          VITE_BROWSER_APP: "1"
           VITE_BASE: /${{ github.event.repository.name }}/
       # Pages serves 404.html for unknown paths, which is what makes a deep
       # link like /budget load the app instead of a GitHub error page.
