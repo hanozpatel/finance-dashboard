@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design tokens.
+
+  Every colour is a custom property so theming is pure CSS: the light palette is
+  defined once on bare :root, and only the values that change are redeclared for
+  dark. Dark is declared under both an OS media query and an explicit
+  [data-theme] scope, so the in-app toggle wins in both directions — a viewer who
+  picks light on an OS set to dark gets light.
+
+  The categorical series slots are the validated eight-hue order from the
+  reference palette, and they are assigned in fixed order and never cycled.
+  Three light-mode slots (aqua, yellow, magenta) sit below 3:1 against the
+  surface, so every chart using them ships a legend with swatches and a table
+  view — the documented relief for that.
+*/
+:root {
+  color-scheme: light;
+
+  --surface-page: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --surface-2: #f4f4f1;
+
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.1);
+  --border-strong: rgba(11, 11, 11, 0.18);
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+
+  /* Sequential blue ramp, for magnitude. */
+  --seq-100: #cde2fb;
+  --seq-250: #86b6ef;
+  --seq-400: #3987e5;
+  --seq-450: #2a78d6;
+  --seq-550: #1c5cab;
+  --seq-700: #0d366b;
+
+  /* Status is reserved: never reused as a series colour. */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+
+  --success-text: #006300;
+  --danger-text: #b3241f;
+
+  --accent-wash: rgba(42, 120, 214, 0.08);
+
+  /* Diverging: below <-> above a reference (the state average). Blue and red
+     poles with a gray midpoint; each arm pair validated for CVD separation at
+     matched strength. Cells always print their value, so the tint is never the
+     only signal. */
+  --div-neg-2: #6da7ec;
+  --div-neg-1: #9ec5f4;
+  --div-mid: #f0efec;
+  --div-pos-1: #f5a8a7;
+  --div-pos-2: #ee7b7a;
+  --div-ink: #0b0b0b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --surface-page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --surface-2: #222221;
+
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.18);
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+
+    --seq-100: #0d366b;
+    --seq-250: #184f95;
+    --seq-400: #256abf;
+    --seq-450: #3987e5;
+    --seq-550: #6da7ec;
+    --seq-700: #cde2fb;
+
+    --success-text: #0ca30c;
+    --danger-text: #e66767;
+
+    --accent-wash: rgba(57, 135, 229, 0.12);
+
+    --div-neg-2: #256abf;
+    --div-neg-1: #1c5cab;
+    --div-mid: #383835;
+    --div-pos-1: #962f2e;
+    --div-pos-2: #b33a39;
+    --div-ink: #ffffff;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --surface-page: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #222221;
+
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+
+  --seq-100: #0d366b;
+  --seq-250: #184f95;
+  --seq-400: #256abf;
+  --seq-450: #3987e5;
+  --seq-550: #6da7ec;
+  --seq-700: #cde2fb;
+
+  --success-text: #0ca30c;
+  --danger-text: #e66767;
+
+  --accent-wash: rgba(57, 135, 229, 0.12);
+
+  --div-neg-2: #256abf;
+  --div-neg-1: #1c5cab;
+  --div-mid: #383835;
+  --div-pos-1: #962f2e;
+  --div-pos-2: #b33a39;
+  --div-ink: #ffffff;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Columns of numbers must align; standalone display figures must not, because
+   tabular digits make a number like 121 look loose at large sizes. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--accent-wash);
+}
+
+/* Recessive scrollbars — chrome should never compete with data. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--axis) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--axis);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+input[type='range'] {
+  accent-color: var(--series-1);
+}

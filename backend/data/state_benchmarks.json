@@ -1,0 +1,964 @@
+{
+ "source": "U.S. Bureau of Economic Analysis, Personal Consumption Expenditures by State (SAPCE4)",
+ "source_url": "https://apps.bea.gov/regional/zip/SAPCE.zip",
+ "year": 2025,
+ "built": "2026-10-12",
+ "unit": "US dollars per person per year, current dollars",
+ "lines": {
+  "Groceries": [
+   {
+    "line": 3,
+    "description": "Food and beverages purchased for off-premises consumption"
+   }
+  ],
+  "Dining": [
+   {
+    "line": 102,
+    "description": "Purchased meals and beverages"
+   }
+  ],
+  "Housing": [
+   {
+    "line": 19,
+    "description": "Housing"
+   },
+   {
+    "line": 24,
+    "description": "Household utilities and fuels"
+   },
+   {
+    "line": 71,
+    "description": "Telecommunication services"
+   },
+   {
+    "line": 72,
+    "description": "Internet access"
+   }
+  ],
+  "Transportation": [
+   {
+    "line": 57,
+    "description": "Motor vehicle operation"
+   },
+   {
+    "line": 63,
+    "description": "Ground transportation"
+   },
+   {
+    "line": 116,
+    "description": "Net motor vehicle and other transportation insurance"
+   }
+  ],
+  "Shopping": [
+   {
+    "line": 7,
+    "description": "Clothing, footwear, and related services"
+   },
+   {
+    "line": 30,
+    "description": "Furnishings, household equipment, and routine household maintenance"
+   },
+   {
+    "line": 75,
+    "description": "Video and audio equipment"
+   },
+   {
+    "line": 76,
+    "description": "Information processing equipment"
+   },
+   {
+    "line": 118,
+    "description": "Personal care"
+   },
+   {
+    "line": 119,
+    "description": "Personal items"
+   }
+  ],
+  "Entertainment": [
+   {
+    "line": 82,
+    "description": "Membership clubs, sports centers, parks, theaters, and museums"
+   },
+   {
+    "line": 80,
+    "description": "Other sporting and recreational goods"
+   }
+  ],
+  "Subscriptions": [
+   {
+    "line": 77,
+    "description": "Services related to video and audio goods and computers"
+   },
+   {
+    "line": 90,
+    "description": "Magazines, newspapers, books, and stationery"
+   }
+  ],
+  "Travel": [
+   {
+    "line": 64,
+    "description": "Air transportation"
+   },
+   {
+    "line": 104,
+    "description": "Accommodations"
+   },
+   {
+    "line": 94,
+    "description": "Package tours"
+   },
+   {
+    "line": 129,
+    "description": "Foreign travel by U.S. residents"
+   }
+  ],
+  "Education": [
+   {
+    "line": 95,
+    "description": "Education"
+   }
+  ]
+ },
+ "not_comparable": {
+  "Health": "BEA's health figure counts what insurers, Medicare and Medicaid pay for care, not just what you pay \u2014 so out-of-pocket spending would always look tiny next to it.",
+  "Fees & Interest": "Interest is not consumption spending, so BEA does not count it.",
+  "Taxes": "Taxes are not consumption spending.",
+  "Gifts & Donations": "Gifts and donations are transfers between people, not purchases.",
+  "Other": "Too mixed a category to compare against any one figure."
+ },
+ "areas": {
+  "US": {
+   "code": "US",
+   "name": "United States",
+   "population": 341786221,
+   "annual_per_person": {
+    "Groceries": 4459,
+    "Dining": 3681,
+    "Housing": 12134,
+    "Transportation": 3314,
+    "Shopping": 7042,
+    "Entertainment": 1923,
+    "Subscriptions": 938,
+    "Travel": 1983,
+    "Education": 1091
+   }
+  },
+  "AL": {
+   "code": "AL",
+   "name": "Alabama",
+   "population": 5193125,
+   "annual_per_person": {
+    "Groceries": 4019,
+    "Dining": 2922,
+    "Housing": 9277,
+    "Transportation": 2891,
+    "Shopping": 5773,
+    "Entertainment": 1478,
+    "Subscriptions": 949,
+    "Travel": 994,
+    "Education": 855
+   }
+  },
+  "AK": {
+   "code": "AK",
+   "name": "Alaska",
+   "population": 737269,
+   "annual_per_person": {
+    "Groceries": 4944,
+    "Dining": 4270,
+    "Housing": 11405,
+    "Transportation": 3415,
+    "Shopping": 5891,
+    "Entertainment": 3729,
+    "Subscriptions": 778,
+    "Travel": 3602,
+    "Education": 1147
+   }
+  },
+  "AZ": {
+   "code": "AZ",
+   "name": "Arizona",
+   "population": 7623828,
+   "annual_per_person": {
+    "Groceries": 4012,
+    "Dining": 3553,
+    "Housing": 12759,
+    "Transportation": 3218,
+    "Shopping": 7303,
+    "Entertainment": 1590,
+    "Subscriptions": 845,
+    "Travel": 2589,
+    "Education": 937
+   }
+  },
+  "AR": {
+   "code": "AR",
+   "name": "Arkansas",
+   "population": 3114809,
+   "annual_per_person": {
+    "Groceries": 3780,
+    "Dining": 2697,
+    "Housing": 8502,
+    "Transportation": 2996,
+    "Shopping": 5261,
+    "Entertainment": 1389,
+    "Subscriptions": 632,
+    "Travel": 915,
+    "Education": 733
+   }
+  },
+  "CA": {
+   "code": "CA",
+   "name": "California",
+   "population": 39355388,
+   "annual_per_person": {
+    "Groceries": 4961,
+    "Dining": 4586,
+    "Housing": 14422,
+    "Transportation": 3653,
+    "Shopping": 8260,
+    "Entertainment": 2809,
+    "Subscriptions": 912,
+    "Travel": 2907,
+    "Education": 1329
+   }
+  },
+  "CO": {
+   "code": "CO",
+   "name": "Colorado",
+   "population": 6012569,
+   "annual_per_person": {
+    "Groceries": 4967,
+    "Dining": 4616,
+    "Housing": 15047,
+    "Transportation": 4013,
+    "Shopping": 8623,
+    "Entertainment": 2477,
+    "Subscriptions": 1294,
+    "Travel": 2602,
+    "Education": 1092
+   }
+  },
+  "CT": {
+   "code": "CT",
+   "name": "Connecticut",
+   "population": 3688489,
+   "annual_per_person": {
+    "Groceries": 4529,
+    "Dining": 3713,
+    "Housing": 13943,
+    "Transportation": 3472,
+    "Shopping": 7908,
+    "Entertainment": 1808,
+    "Subscriptions": 1113,
+    "Travel": 2609,
+    "Education": 1779
+   }
+  },
+  "DE": {
+   "code": "DE",
+   "name": "Delaware",
+   "population": 1059948,
+   "annual_per_person": {
+    "Groceries": 4310,
+    "Dining": 3859,
+    "Housing": 12677,
+    "Transportation": 3106,
+    "Shopping": 6850,
+    "Entertainment": 2025,
+    "Subscriptions": 811,
+    "Travel": 1703,
+    "Education": 1358
+   }
+  },
+  "DC": {
+   "code": "DC",
+   "name": "District of Columbia",
+   "population": 693643,
+   "annual_per_person": {
+    "Groceries": 7644,
+    "Dining": 4891,
+    "Housing": 18304,
+    "Transportation": 4191,
+    "Shopping": 11655,
+    "Entertainment": 1427,
+    "Subscriptions": 1231,
+    "Travel": 3713,
+    "Education": 1790
+   }
+  },
+  "FL": {
+   "code": "FL",
+   "name": "Florida",
+   "population": 23462420,
+   "annual_per_person": {
+    "Groceries": 4924,
+    "Dining": 4224,
+    "Housing": 15172,
+    "Transportation": 3048,
+    "Shopping": 8188,
+    "Entertainment": 1707,
+    "Subscriptions": 1094,
+    "Travel": 3091,
+    "Education": 819
+   }
+  },
+  "GA": {
+   "code": "GA",
+   "name": "Georgia",
+   "population": 11302674,
+   "annual_per_person": {
+    "Groceries": 4534,
+    "Dining": 3503,
+    "Housing": 11199,
+    "Transportation": 3176,
+    "Shopping": 6545,
+    "Entertainment": 1765,
+    "Subscriptions": 744,
+    "Travel": 1782,
+    "Education": 931
+   }
+  },
+  "HI": {
+   "code": "HI",
+   "name": "Hawaii",
+   "population": 1432830,
+   "annual_per_person": {
+    "Groceries": 5844,
+    "Dining": 4106,
+    "Housing": 13217,
+    "Transportation": 2289,
+    "Shopping": 6384,
+    "Entertainment": 2024,
+    "Subscriptions": 834,
+    "Travel": 3993,
+    "Education": 1121
+   }
+  },
+  "ID": {
+   "code": "ID",
+   "name": "Idaho",
+   "population": 2029726,
+   "annual_per_person": {
+    "Groceries": 3884,
+    "Dining": 2559,
+    "Housing": 10726,
+    "Transportation": 3339,
+    "Shopping": 5131,
+    "Entertainment": 2276,
+    "Subscriptions": 617,
+    "Travel": 1422,
+    "Education": 687
+   }
+  },
+  "IL": {
+   "code": "IL",
+   "name": "Illinois",
+   "population": 12719164,
+   "annual_per_person": {
+    "Groceries": 4268,
+    "Dining": 3926,
+    "Housing": 11147,
+    "Transportation": 3386,
+    "Shopping": 7859,
+    "Entertainment": 1921,
+    "Subscriptions": 1170,
+    "Travel": 2608,
+    "Education": 1422
+   }
+  },
+  "IN": {
+   "code": "IN",
+   "name": "Indiana",
+   "population": 6973333,
+   "annual_per_person": {
+    "Groceries": 4154,
+    "Dining": 3044,
+    "Housing": 9412,
+    "Transportation": 3272,
+    "Shopping": 5486,
+    "Entertainment": 1754,
+    "Subscriptions": 716,
+    "Travel": 1001,
+    "Education": 830
+   }
+  },
+  "IA": {
+   "code": "IA",
+   "name": "Iowa",
+   "population": 3238395,
+   "annual_per_person": {
+    "Groceries": 4213,
+    "Dining": 2776,
+    "Housing": 8702,
+    "Transportation": 3812,
+    "Shopping": 4705,
+    "Entertainment": 1528,
+    "Subscriptions": 974,
+    "Travel": 1291,
+    "Education": 819
+   }
+  },
+  "KS": {
+   "code": "KS",
+   "name": "Kansas",
+   "population": 2977200,
+   "annual_per_person": {
+    "Groceries": 4617,
+    "Dining": 3103,
+    "Housing": 10453,
+    "Transportation": 3186,
+    "Shopping": 5319,
+    "Entertainment": 1381,
+    "Subscriptions": 961,
+    "Travel": 1310,
+    "Education": 1001
+   }
+  },
+  "KY": {
+   "code": "KY",
+   "name": "Kentucky",
+   "population": 4606905,
+   "annual_per_person": {
+    "Groceries": 4487,
+    "Dining": 3030,
+    "Housing": 8744,
+    "Transportation": 2933,
+    "Shopping": 4848,
+    "Entertainment": 1606,
+    "Subscriptions": 775,
+    "Travel": 912,
+    "Education": 832
+   }
+  },
+  "LA": {
+   "code": "LA",
+   "name": "Louisiana",
+   "population": 4618228,
+   "annual_per_person": {
+    "Groceries": 4193,
+    "Dining": 3352,
+    "Housing": 8912,
+    "Transportation": 2775,
+    "Shopping": 5387,
+    "Entertainment": 1233,
+    "Subscriptions": 448,
+    "Travel": 1133,
+    "Education": 852
+   }
+  },
+  "ME": {
+   "code": "ME",
+   "name": "Maine",
+   "population": 1414874,
+   "annual_per_person": {
+    "Groceries": 5420,
+    "Dining": 3797,
+    "Housing": 12056,
+    "Transportation": 3782,
+    "Shopping": 5965,
+    "Entertainment": 2237,
+    "Subscriptions": 1053,
+    "Travel": 1982,
+    "Education": 1075
+   }
+  },
+  "MD": {
+   "code": "MD",
+   "name": "Maryland",
+   "population": 6265304,
+   "annual_per_person": {
+    "Groceries": 3998,
+    "Dining": 3473,
+    "Housing": 13096,
+    "Transportation": 3158,
+    "Shopping": 7523,
+    "Entertainment": 1827,
+    "Subscriptions": 1060,
+    "Travel": 2003,
+    "Education": 1370
+   }
+  },
+  "MA": {
+   "code": "MA",
+   "name": "Massachusetts",
+   "population": 7154105,
+   "annual_per_person": {
+    "Groceries": 4867,
+    "Dining": 4392,
+    "Housing": 14573,
+    "Transportation": 3810,
+    "Shopping": 7664,
+    "Entertainment": 2135,
+    "Subscriptions": 1925,
+    "Travel": 2533,
+    "Education": 1551
+   }
+  },
+  "MI": {
+   "code": "MI",
+   "name": "Michigan",
+   "population": 10127964,
+   "annual_per_person": {
+    "Groceries": 4271,
+    "Dining": 2996,
+    "Housing": 10676,
+    "Transportation": 3195,
+    "Shopping": 6041,
+    "Entertainment": 1610,
+    "Subscriptions": 630,
+    "Travel": 1320,
+    "Education": 1086
+   }
+  },
+  "MN": {
+   "code": "MN",
+   "name": "Minnesota",
+   "population": 5830442,
+   "annual_per_person": {
+    "Groceries": 3883,
+    "Dining": 3190,
+    "Housing": 11335,
+    "Transportation": 3620,
+    "Shopping": 6771,
+    "Entertainment": 2104,
+    "Subscriptions": 797,
+    "Travel": 1420,
+    "Education": 1201
+   }
+  },
+  "MS": {
+   "code": "MS",
+   "name": "Mississippi",
+   "population": 2954145,
+   "annual_per_person": {
+    "Groceries": 4202,
+    "Dining": 2938,
+    "Housing": 8643,
+    "Transportation": 2986,
+    "Shopping": 4484,
+    "Entertainment": 1430,
+    "Subscriptions": 383,
+    "Travel": 717,
+    "Education": 774
+   }
+  },
+  "MO": {
+   "code": "MO",
+   "name": "Missouri",
+   "population": 6270508,
+   "annual_per_person": {
+    "Groceries": 4050,
+    "Dining": 3378,
+    "Housing": 9860,
+    "Transportation": 3932,
+    "Shopping": 5416,
+    "Entertainment": 1895,
+    "Subscriptions": 1023,
+    "Travel": 1059,
+    "Education": 940
+   }
+  },
+  "MT": {
+   "code": "MT",
+   "name": "Montana",
+   "population": 1144685,
+   "annual_per_person": {
+    "Groceries": 5173,
+    "Dining": 3164,
+    "Housing": 11836,
+    "Transportation": 3685,
+    "Shopping": 5592,
+    "Entertainment": 2602,
+    "Subscriptions": 736,
+    "Travel": 2572,
+    "Education": 711
+   }
+  },
+  "NE": {
+   "code": "NE",
+   "name": "Nebraska",
+   "population": 2018008,
+   "annual_per_person": {
+    "Groceries": 3981,
+    "Dining": 3171,
+    "Housing": 9360,
+    "Transportation": 3997,
+    "Shopping": 5518,
+    "Entertainment": 1531,
+    "Subscriptions": 1053,
+    "Travel": 1395,
+    "Education": 952
+   }
+  },
+  "NV": {
+   "code": "NV",
+   "name": "Nevada",
+   "population": 3282166,
+   "annual_per_person": {
+    "Groceries": 4685,
+    "Dining": 3279,
+    "Housing": 12354,
+    "Transportation": 3097,
+    "Shopping": 7072,
+    "Entertainment": 1995,
+    "Subscriptions": 797,
+    "Travel": 2372,
+    "Education": 865
+   }
+  },
+  "NH": {
+   "code": "NH",
+   "name": "New Hampshire",
+   "population": 1415339,
+   "annual_per_person": {
+    "Groceries": 5626,
+    "Dining": 3939,
+    "Housing": 14114,
+    "Transportation": 3962,
+    "Shopping": 7976,
+    "Entertainment": 2220,
+    "Subscriptions": 1030,
+    "Travel": 1806,
+    "Education": 1834
+   }
+  },
+  "NJ": {
+   "code": "NJ",
+   "name": "New Jersey",
+   "population": 9548264,
+   "annual_per_person": {
+    "Groceries": 4433,
+    "Dining": 3820,
+    "Housing": 13522,
+    "Transportation": 3045,
+    "Shopping": 8102,
+    "Entertainment": 1911,
+    "Subscriptions": 1076,
+    "Travel": 2201,
+    "Education": 1793
+   }
+  },
+  "NM": {
+   "code": "NM",
+   "name": "New Mexico",
+   "population": 2125489,
+   "annual_per_person": {
+    "Groceries": 4263,
+    "Dining": 3261,
+    "Housing": 10101,
+    "Transportation": 3056,
+    "Shopping": 4763,
+    "Entertainment": 1548,
+    "Subscriptions": 581,
+    "Travel": 1718,
+    "Education": 853
+   }
+  },
+  "NY": {
+   "code": "NY",
+   "name": "New York",
+   "population": 20002341,
+   "annual_per_person": {
+    "Groceries": 4389,
+    "Dining": 4229,
+    "Housing": 13466,
+    "Transportation": 3269,
+    "Shopping": 7574,
+    "Entertainment": 1887,
+    "Subscriptions": 1159,
+    "Travel": 2500,
+    "Education": 1228
+   }
+  },
+  "NC": {
+   "code": "NC",
+   "name": "North Carolina",
+   "population": 11197980,
+   "annual_per_person": {
+    "Groceries": 4343,
+    "Dining": 3438,
+    "Housing": 11374,
+    "Transportation": 2960,
+    "Shopping": 7688,
+    "Entertainment": 1572,
+    "Subscriptions": 786,
+    "Travel": 1456,
+    "Education": 825
+   }
+  },
+  "ND": {
+   "code": "ND",
+   "name": "North Dakota",
+   "population": 799356,
+   "annual_per_person": {
+    "Groceries": 3893,
+    "Dining": 2943,
+    "Housing": 9998,
+    "Transportation": 3261,
+    "Shopping": 6951,
+    "Entertainment": 1929,
+    "Subscriptions": 659,
+    "Travel": 2121,
+    "Education": 864
+   }
+  },
+  "OH": {
+   "code": "OH",
+   "name": "Ohio",
+   "population": 11900606,
+   "annual_per_person": {
+    "Groceries": 4257,
+    "Dining": 3168,
+    "Housing": 9652,
+    "Transportation": 2909,
+    "Shopping": 5765,
+    "Entertainment": 1980,
+    "Subscriptions": 914,
+    "Travel": 1028,
+    "Education": 1023
+   }
+  },
+  "OK": {
+   "code": "OK",
+   "name": "Oklahoma",
+   "population": 4123290,
+   "annual_per_person": {
+    "Groceries": 3368,
+    "Dining": 3016,
+    "Housing": 8702,
+    "Transportation": 3209,
+    "Shopping": 5207,
+    "Entertainment": 1335,
+    "Subscriptions": 507,
+    "Travel": 1214,
+    "Education": 779
+   }
+  },
+  "OR": {
+   "code": "OR",
+   "name": "Oregon",
+   "population": 4273595,
+   "annual_per_person": {
+    "Groceries": 5125,
+    "Dining": 3748,
+    "Housing": 11979,
+    "Transportation": 3094,
+    "Shopping": 7278,
+    "Entertainment": 1950,
+    "Subscriptions": 686,
+    "Travel": 1927,
+    "Education": 943
+   }
+  },
+  "PA": {
+   "code": "PA",
+   "name": "Pennsylvania",
+   "population": 13059461,
+   "annual_per_person": {
+    "Groceries": 4378,
+    "Dining": 3142,
+    "Housing": 11477,
+    "Transportation": 3233,
+    "Shopping": 7250,
+    "Entertainment": 1842,
+    "Subscriptions": 1120,
+    "Travel": 1650,
+    "Education": 1335
+   }
+  },
+  "RI": {
+   "code": "RI",
+   "name": "Rhode Island",
+   "population": 1114523,
+   "annual_per_person": {
+    "Groceries": 4569,
+    "Dining": 4459,
+    "Housing": 11584,
+    "Transportation": 3862,
+    "Shopping": 5974,
+    "Entertainment": 1665,
+    "Subscriptions": 1011,
+    "Travel": 1904,
+    "Education": 1311
+   }
+  },
+  "SC": {
+   "code": "SC",
+   "name": "South Carolina",
+   "population": 5570269,
+   "annual_per_person": {
+    "Groceries": 4382,
+    "Dining": 3309,
+    "Housing": 11735,
+    "Transportation": 3300,
+    "Shopping": 5793,
+    "Entertainment": 1697,
+    "Subscriptions": 588,
+    "Travel": 1565,
+    "Education": 908
+   }
+  },
+  "SD": {
+   "code": "SD",
+   "name": "South Dakota",
+   "population": 935088,
+   "annual_per_person": {
+    "Groceries": 3655,
+    "Dining": 3208,
+    "Housing": 9747,
+    "Transportation": 2930,
+    "Shopping": 5407,
+    "Entertainment": 2040,
+    "Subscriptions": 638,
+    "Travel": 1526,
+    "Education": 727
+   }
+  },
+  "TN": {
+   "code": "TN",
+   "name": "Tennessee",
+   "population": 7315014,
+   "annual_per_person": {
+    "Groceries": 3645,
+    "Dining": 3490,
+    "Housing": 10401,
+    "Transportation": 3095,
+    "Shopping": 5980,
+    "Entertainment": 1831,
+    "Subscriptions": 1134,
+    "Travel": 1375,
+    "Education": 1028
+   }
+  },
+  "TX": {
+   "code": "TX",
+   "name": "Texas",
+   "population": 31709992,
+   "annual_per_person": {
+    "Groceries": 4379,
+    "Dining": 3665,
+    "Housing": 11690,
+    "Transportation": 3358,
+    "Shopping": 6919,
+    "Entertainment": 1601,
+    "Subscriptions": 869,
+    "Travel": 1417,
+    "Education": 930
+   }
+  },
+  "UT": {
+   "code": "UT",
+   "name": "Utah",
+   "population": 3538925,
+   "annual_per_person": {
+    "Groceries": 3942,
+    "Dining": 2741,
+    "Housing": 11243,
+    "Transportation": 3361,
+    "Shopping": 7906,
+    "Entertainment": 3012,
+    "Subscriptions": 804,
+    "Travel": 1805,
+    "Education": 694
+   }
+  },
+  "VT": {
+   "code": "VT",
+   "name": "Vermont",
+   "population": 644660,
+   "annual_per_person": {
+    "Groceries": 5345,
+    "Dining": 3221,
+    "Housing": 12380,
+    "Transportation": 3521,
+    "Shopping": 5554,
+    "Entertainment": 2035,
+    "Subscriptions": 1208,
+    "Travel": 2479,
+    "Education": 1464
+   }
+  },
+  "VA": {
+   "code": "VA",
+   "name": "Virginia",
+   "population": 8880150,
+   "annual_per_person": {
+    "Groceries": 4523,
+    "Dining": 3657,
+    "Housing": 12485,
+    "Transportation": 3269,
+    "Shopping": 7781,
+    "Entertainment": 2061,
+    "Subscriptions": 1016,
+    "Travel": 1931,
+    "Education": 1257
+   }
+  },
+  "WA": {
+   "code": "WA",
+   "name": "Washington",
+   "population": 8001061,
+   "annual_per_person": {
+    "Groceries": 4670,
+    "Dining": 3629,
+    "Housing": 14714,
+    "Transportation": 3757,
+    "Shopping": 8105,
+    "Entertainment": 1962,
+    "Subscriptions": 879,
+    "Travel": 2507,
+    "Education": 971
+   }
+  },
+  "WV": {
+   "code": "WV",
+   "name": "West Virginia",
+   "population": 1766144,
+   "annual_per_person": {
+    "Groceries": 4501,
+    "Dining": 2540,
+    "Housing": 8581,
+    "Transportation": 2653,
+    "Shopping": 4319,
+    "Entertainment": 1417,
+    "Subscriptions": 484,
+    "Travel": 1162,
+    "Education": 703
+   }
+  },
+  "WI": {
+   "code": "WI",
+   "name": "Wisconsin",
+   "population": 5972824,
+   "annual_per_person": {
+    "Groceries": 4071,
+    "Dining": 3076,
+    "Housing": 10338,
+    "Transportation": 3458,
+    "Shopping": 6117,
+    "Entertainment": 1915,
+    "Subscriptions": 862,
+    "Travel": 1498,
+    "Education": 965
+   }
+  },
+  "WY": {
+   "code": "WY",
+   "name": "Wyoming",
+   "population": 588756,
+   "annual_per_person": {
+    "Groceries": 5099,
+    "Dining": 3612,
+    "Housing": 12393,
+    "Transportation": 3906,
+    "Shopping": 5770,
+    "Entertainment": 2106,
+    "Subscriptions": 750,
+    "Travel": 2065,
+    "Education": 901
+   }
+  }
+ }
+}
